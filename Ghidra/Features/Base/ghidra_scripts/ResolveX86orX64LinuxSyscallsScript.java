@@ -185,7 +185,10 @@ public class ResolveX86orX64LinuxSyscallsScript extends GhidraScript {
 				}
 				callee = createFunction(callTarget, funcName);
 				callee.setCallingConvention(callingConvention);
-				if (noreturnFunctions.contains(funcName)) {
+				
+				// check if the function name is a no-return function
+				// leading underscores are stripped during checking
+				if (noreturnFunctions.contains(funcName.replaceAll("^_+", ""))) {
 					callee.setNoReturn(true);
 				}
 			}
